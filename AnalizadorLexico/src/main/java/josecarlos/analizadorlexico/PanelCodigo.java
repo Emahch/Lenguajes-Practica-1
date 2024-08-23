@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.Element;
 
 /**
  *
@@ -12,15 +11,12 @@ import javax.swing.text.Element;
  */
 public class PanelCodigo extends javax.swing.JPanel {
 
-    private NumeroLinea numeroLinea;
 
     /**
      * Creates new form PanelCodigo
      */
     public PanelCodigo() {
         initComponents();
-        numeroLinea = new NumeroLinea(txtCodigo);
-        scrollPanel.setRowHeaderView(numeroLinea);
     }
 
     /**
@@ -75,9 +71,9 @@ public class PanelCodigo extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(scrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(10, 10, 10)
+                .addComponent(scrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelPosicionTexto)
                     .addComponent(labelPosicionImagen))
@@ -91,14 +87,13 @@ public class PanelCodigo extends javax.swing.JPanel {
 
         try {
             int caretpos = txtCodigo.getCaretPosition();
-            txtCodigo.setCaretColor(Color.GREEN);
+            
             linea = txtCodigo.getLineOfOffset(caretpos);
             columna = caretpos - txtCodigo.getLineStartOffset(linea);
 
             // Ya que las líneas las cuenta desde la 0
             linea += 1;
         } catch (BadLocationException ex) {
-            System.out.println("mala mia");
         }
 
         // Actualizamos el estado
@@ -107,6 +102,12 @@ public class PanelCodigo extends javax.swing.JPanel {
 
     private void actualizarEstado(int linea, int columna) {
         labelPosicionTexto.setText("Linea: " + linea + " Columna: " + columna);
+        try {
+            txtCodigo.getDocument().getText(0, 1);
+            labelPosicionImagen.setText(txtCodigo.getDocument().getText(0, 2));
+        } catch (BadLocationException ex) {
+            
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

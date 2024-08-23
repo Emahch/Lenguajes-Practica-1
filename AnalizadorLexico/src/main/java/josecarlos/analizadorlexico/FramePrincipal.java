@@ -14,6 +14,11 @@ public class FramePrincipal extends javax.swing.JFrame {
     public FramePrincipal() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH );
+        PanelCodigo panel = new PanelCodigo();
+        panelContenido.add(panel);
+        PanelImagen panel2 = new PanelImagen();
+        panelContenido.add(panel2);
+        pack();
     }
 
     /**
@@ -23,14 +28,48 @@ public class FramePrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
+        panelAcciones = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        panelContenido = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Analizador Léxico");
         setMinimumSize(new java.awt.Dimension(800, 500));
-        getContentPane().setLayout(new java.awt.GridLayout(1, 2));
+
+        jLabel2.setBackground(new java.awt.Color(0, 102, 153));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Cambios Guardados");
+        jLabel2.setOpaque(true);
+        getContentPane().add(jLabel2, java.awt.BorderLayout.PAGE_END);
+
+        jButton1.setBackground(new java.awt.Color(0, 102, 153));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Ingresar Archivo");
+        jButton1.setFocusPainted(false);
+        panelAcciones.add(jButton1);
+
+        jButton2.setBackground(new java.awt.Color(0, 102, 153));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Exportar Imágen");
+        jButton2.setFocusPainted(false);
+        panelAcciones.add(jButton2);
+
+        getContentPane().add(panelAcciones, java.awt.BorderLayout.NORTH);
+
+        panelContenido.setLayout(new java.awt.GridLayout(1, 2));
+        getContentPane().add(panelContenido, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel panelAcciones;
+    private javax.swing.JPanel panelContenido;
     // End of variables declaration//GEN-END:variables
 }

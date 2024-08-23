@@ -15,14 +15,8 @@ public class AnalizadorLexico {
 
     public static void main(String[] args) {
         FramePrincipal frame = new FramePrincipal();
-//        frame.setSize(frame.getSize());
-//        System.out.println("frame " + frame.getSize().toString());
         frame.setVisible(true);
-        PanelCodigo panel = new PanelCodigo();
-        frame.getContentPane().add(panel);
-        PanelImagen panel2 = new PanelImagen();
-        frame.getContentPane().add(panel2);
-        frame.pack();
+        
 //        try {
 //            Thread.sleep(1000);
 //        } catch (InterruptedException e) {
