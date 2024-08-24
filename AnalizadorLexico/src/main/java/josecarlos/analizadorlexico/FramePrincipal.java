@@ -1,6 +1,12 @@
 package josecarlos.analizadorlexico;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -8,17 +14,35 @@ import javax.swing.JFrame;
  */
 public class FramePrincipal extends javax.swing.JFrame {
 
+    private boolean botonesActivos = true;
+
     /**
      * Creates new form FramePrincipal
      */
     public FramePrincipal() {
         initComponents();
-        setExtendedState(JFrame.MAXIMIZED_BOTH );
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         PanelCodigo panel = new PanelCodigo();
         panelContenido.add(panel);
         PanelImagen panel2 = new PanelImagen();
         panelContenido.add(panel2);
         pack();
+        togleBotones();
+    }
+
+    public void createImage(JPanel panel) {
+        int w = panel.getWidth();
+        int h = panel.getHeight();
+        BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = bi.createGraphics();
+        panel.print(g);
+        g.dispose();
+        try {
+            File outputfile = new File("saved.png");
+            ImageIO.write(bi, "png", outputfile);
+        } catch (IOException e) {
+            // handle exception
+        }
     }
 
     /**
@@ -30,8 +54,8 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         panelAcciones = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        botonIngresarArchivo = new javax.swing.JButton();
+        botonExportarPng = new javax.swing.JButton();
         panelContenido = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -44,17 +68,22 @@ public class FramePrincipal extends javax.swing.JFrame {
         jLabel2.setOpaque(true);
         getContentPane().add(jLabel2, java.awt.BorderLayout.PAGE_END);
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 153));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Ingresar Archivo");
-        jButton1.setFocusPainted(false);
-        panelAcciones.add(jButton1);
+        botonIngresarArchivo.setBackground(new java.awt.Color(0, 102, 153));
+        botonIngresarArchivo.setForeground(new java.awt.Color(255, 255, 255));
+        botonIngresarArchivo.setText("Ingresar Archivo");
+        botonIngresarArchivo.setFocusPainted(false);
+        botonIngresarArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonIngresarArchivoActionPerformed(evt);
+            }
+        });
+        panelAcciones.add(botonIngresarArchivo);
 
-        jButton2.setBackground(new java.awt.Color(0, 102, 153));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Exportar Imágen");
-        jButton2.setFocusPainted(false);
-        panelAcciones.add(jButton2);
+        botonExportarPng.setBackground(new java.awt.Color(0, 102, 153));
+        botonExportarPng.setForeground(new java.awt.Color(255, 255, 255));
+        botonExportarPng.setText("Exportar Imágen");
+        botonExportarPng.setFocusPainted(false);
+        panelAcciones.add(botonExportarPng);
 
         getContentPane().add(panelAcciones, java.awt.BorderLayout.NORTH);
 
@@ -65,9 +94,20 @@ public class FramePrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void togleBotones() {
+        botonesActivos = !botonesActivos;
+        botonIngresarArchivo.setEnabled(botonesActivos);
+        botonExportarPng.setEnabled(botonesActivos);
+    }
+
+    private void botonIngresarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarArchivoActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_botonIngresarArchivoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton botonExportarPng;
+    private javax.swing.JButton botonIngresarArchivo;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel panelAcciones;
     private javax.swing.JPanel panelContenido;
