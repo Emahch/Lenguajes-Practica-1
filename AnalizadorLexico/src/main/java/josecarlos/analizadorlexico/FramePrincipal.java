@@ -1,12 +1,8 @@
 package josecarlos.analizadorlexico;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.awt.BorderLayout;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -15,6 +11,7 @@ import javax.swing.JPanel;
 public class FramePrincipal extends javax.swing.JFrame {
 
     private boolean botonesActivos = true;
+    private PanelContenido panelContenido;
 
     /**
      * Creates new form FramePrincipal
@@ -22,27 +19,10 @@ public class FramePrincipal extends javax.swing.JFrame {
     public FramePrincipal() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        PanelCodigo panel = new PanelCodigo();
-        panelContenido.add(panel);
-        PanelImagen panel2 = new PanelImagen();
-        panelContenido.add(panel2);
+        panelContenido = new PanelContenido();
+        getContentPane().add(panelContenido, BorderLayout.CENTER);
         pack();
-        togleBotones();
-    }
-
-    public void createImage(JPanel panel) {
-        int w = panel.getWidth();
-        int h = panel.getHeight();
-        BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = bi.createGraphics();
-        panel.print(g);
-        g.dispose();
-        try {
-            File outputfile = new File("saved.png");
-            ImageIO.write(bi, "png", outputfile);
-        } catch (IOException e) {
-            // handle exception
-        }
+//        togleBotones();
     }
 
     /**
@@ -56,7 +36,6 @@ public class FramePrincipal extends javax.swing.JFrame {
         panelAcciones = new javax.swing.JPanel();
         botonIngresarArchivo = new javax.swing.JButton();
         botonExportarPng = new javax.swing.JButton();
-        panelContenido = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Analizador Léxico");
@@ -87,9 +66,6 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         getContentPane().add(panelAcciones, java.awt.BorderLayout.NORTH);
 
-        panelContenido.setLayout(new java.awt.GridLayout(1, 2));
-        getContentPane().add(panelContenido, java.awt.BorderLayout.CENTER);
-
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -101,8 +77,14 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     private void botonIngresarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarArchivoActionPerformed
-        // TODO add your handling code here:
-
+        try {
+            JTextArea txtCodigo = panelContenido.getPanelCodigo().getTxtCodigo();
+            
+            ExportImportFiles importArchivo = new ExportImportFiles(false);
+            String texto = importArchivo.recibirArchivoEntrada();
+            txtCodigo.setText(texto);
+        } catch (SolicitudCanceladaException ex) {
+        }
     }//GEN-LAST:event_botonIngresarArchivoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -110,6 +92,5 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonIngresarArchivo;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel panelAcciones;
-    private javax.swing.JPanel panelContenido;
     // End of variables declaration//GEN-END:variables
 }

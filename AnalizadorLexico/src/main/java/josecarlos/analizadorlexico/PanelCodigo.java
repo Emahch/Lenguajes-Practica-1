@@ -3,6 +3,8 @@ package josecarlos.analizadorlexico;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.text.BadLocationException;
 
 /**
@@ -30,9 +32,11 @@ public class PanelCodigo extends javax.swing.JPanel {
         scrollPanel = new javax.swing.JScrollPane();
         txtCodigo = new javax.swing.JTextArea();
         labelPosicionImagen = new javax.swing.JLabel();
+        labelTituloPosicionTexto = new javax.swing.JLabel();
+        labelTituloPosicionCuadricula = new javax.swing.JLabel();
 
         labelPosicionTexto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelPosicionTexto.setText("Columnas: X, Filas: Y");
+        labelPosicionTexto.setText("Linea: X, Columna: X");
 
         scrollPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
@@ -52,68 +56,90 @@ public class PanelCodigo extends javax.swing.JPanel {
         scrollPanel.setViewportView(txtCodigo);
 
         labelPosicionImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelPosicionImagen.setText("Columnas: X, Filas: Y");
+        labelPosicionImagen.setText("Linea: X, Columna: X");
+
+        labelTituloPosicionTexto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelTituloPosicionTexto.setText("Texto");
+
+        labelTituloPosicionCuadricula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelTituloPosicionCuadricula.setText("Cuadricula");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollPanel)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelPosicionTexto, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelTituloPosicionTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelPosicionTexto, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelPosicionImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
-                    .addComponent(scrollPanel))
-                .addGap(30, 30, 30))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelPosicionImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                            .addComponent(labelTituloPosicionCuadricula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(scrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
-                .addGap(10, 10, 10)
+                .addComponent(scrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelTituloPosicionTexto)
+                    .addComponent(labelTituloPosicionCuadricula))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelPosicionTexto)
-                    .addComponent(labelPosicionImagen))
-                .addGap(6, 6, 6))
+                    .addComponent(labelPosicionImagen)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtCodigoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtCodigoCaretUpdate
         int linea = 1;
         int columna = 1;
-
         try {
             int caretpos = txtCodigo.getCaretPosition();
             
             linea = txtCodigo.getLineOfOffset(caretpos);
             columna = caretpos - txtCodigo.getLineStartOffset(linea);
-
-            // Ya que las líneas las cuenta desde la 0
             linea += 1;
         } catch (BadLocationException ex) {
         }
-
-        // Actualizamos el estado
         actualizarEstado(linea, columna);
     }//GEN-LAST:event_txtCodigoCaretUpdate
 
     private void actualizarEstado(int linea, int columna) {
-        labelPosicionTexto.setText("Linea: " + linea + " Columna: " + columna);
-        try {
-            txtCodigo.getDocument().getText(0, 1);
-            labelPosicionImagen.setText(txtCodigo.getDocument().getText(0, 2));
-        } catch (BadLocationException ex) {
-            
-        }
+        labelPosicionTexto.setText("Linea: " + linea + ", Columna: " + columna);
+//        try {
+//            txtCodigo.getDocument().getText(0, 1);
+//            labelPosicionImagen.setText(txtCodigo.getDocument().getText(0, 2));
+//        } catch (BadLocationException ex) {
+//            
+//        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel labelPosicionImagen;
     private javax.swing.JLabel labelPosicionTexto;
+    private javax.swing.JLabel labelTituloPosicionCuadricula;
+    private javax.swing.JLabel labelTituloPosicionTexto;
     private javax.swing.JScrollPane scrollPanel;
     private javax.swing.JTextArea txtCodigo;
     // End of variables declaration//GEN-END:variables
+
+    public JLabel getLabelPosicionImagen() {
+        return labelPosicionImagen;
+    }
+
+    public JLabel getLabelPosicionTexto() {
+        return labelPosicionTexto;
+    }
+
+    public JTextArea getTxtCodigo() {
+        return txtCodigo;
+    }
 }
