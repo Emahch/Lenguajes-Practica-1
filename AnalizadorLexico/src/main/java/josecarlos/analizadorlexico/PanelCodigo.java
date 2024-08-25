@@ -1,8 +1,5 @@
 package josecarlos.analizadorlexico;
 
-import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.text.BadLocationException;
@@ -13,12 +10,13 @@ import javax.swing.text.BadLocationException;
  */
 public class PanelCodigo extends javax.swing.JPanel {
 
-
+    private Analizador analizador;
     /**
      * Creates new form PanelCodigo
      */
     public PanelCodigo() {
         initComponents();
+        analizador = new Analizador();
     }
 
     /**
@@ -103,7 +101,7 @@ public class PanelCodigo extends javax.swing.JPanel {
         int columna = 1;
         try {
             int caretpos = txtCodigo.getCaretPosition();
-            
+
             linea = txtCodigo.getLineOfOffset(caretpos);
             columna = caretpos - txtCodigo.getLineStartOffset(linea);
             linea += 1;
@@ -112,8 +110,13 @@ public class PanelCodigo extends javax.swing.JPanel {
         actualizarEstado(linea, columna);
     }//GEN-LAST:event_txtCodigoCaretUpdate
 
+    private void analizarTexto(String texto){
+        analizador.analizarTexto(texto);
+    }
+    
     private void actualizarEstado(int linea, int columna) {
         labelPosicionTexto.setText("Linea: " + linea + ", Columna: " + columna);
+        analizarTexto(txtCodigo.getText());
 //        try {
 //            txtCodigo.getDocument().getText(0, 1);
 //            labelPosicionImagen.setText(txtCodigo.getDocument().getText(0, 2));
