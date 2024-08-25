@@ -40,7 +40,7 @@ public class PanelCodigo extends javax.swing.JPanel {
 
         txtCodigo.setBackground(new java.awt.Color(255, 255, 255));
         txtCodigo.setColumns(20);
-        txtCodigo.setFont(new java.awt.Font("Nimbus Mono L", 0, 15)); // NOI18N
+        txtCodigo.setFont(new java.awt.Font("Nimbus Mono PS", 0, 12)); // NOI18N
         txtCodigo.setForeground(new java.awt.Color(0, 0, 0));
         txtCodigo.setLineWrap(true);
         txtCodigo.setRows(5);
