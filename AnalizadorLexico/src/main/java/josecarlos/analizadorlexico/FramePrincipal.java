@@ -1,6 +1,7 @@
 package josecarlos.analizadorlexico;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
@@ -12,6 +13,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     private boolean botonesActivos = true;
     private PanelContenido panelContenido;
+    private Dimension dimensionImagen;
 
     /**
      * Creates new form FramePrincipal
@@ -19,10 +21,12 @@ public class FramePrincipal extends javax.swing.JFrame {
     public FramePrincipal() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        panelContenido = new PanelContenido();
+        togleBotones();
+        solicitarCuadricula();
+        
+        panelContenido = new PanelContenido(dimensionImagen);
         getContentPane().add(panelContenido, BorderLayout.CENTER);
         pack();
-//        togleBotones();
     }
 
     /**
@@ -74,6 +78,17 @@ public class FramePrincipal extends javax.swing.JFrame {
         botonesActivos = !botonesActivos;
         botonIngresarArchivo.setEnabled(botonesActivos);
         botonExportarPng.setEnabled(botonesActivos);
+    }
+    
+    private void solicitarCuadricula() {
+        DialogSolicitarCuadricula dialogCuadricula = new DialogSolicitarCuadricula(this);
+        dialogCuadricula.setVisible(true);
+        if (dialogCuadricula.getConfirmacion()) {
+            dimensionImagen = dialogCuadricula.getDimension();
+            togleBotones();
+        } else {
+            System.exit(0);
+        }
     }
 
     private void botonIngresarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIngresarArchivoActionPerformed
