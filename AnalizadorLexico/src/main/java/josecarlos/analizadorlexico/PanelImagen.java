@@ -3,6 +3,7 @@ package josecarlos.analizadorlexico;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.List;
 import javax.swing.JPanel;
 
 /**
@@ -12,27 +13,45 @@ import javax.swing.JPanel;
 public class PanelImagen extends JPanel {
 
     private Dimension dimensionCuadricula;
-    private int areaCuadricula;
-    private JPanel[][] panelesCuadricula;
-    
+    private PanelCuadro[][] panelesCuadricula;
+
     /**
-     * 
+     *
      * @param dimension
      */
     public PanelImagen(Dimension dimension) {
         this.dimensionCuadricula = dimension;
-        this.areaCuadricula = dimension.height * dimension.width;
+        this.panelesCuadricula = new PanelCuadro[dimension.height][dimension.width];
+        this.setBackground(Color.WHITE);
         this.setLayout(new GridLayout(dimension.height, dimension.width, 2, 2));
         this.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        crearCuadricula();
+        limpiarCuadricula();
     }
-    
-    private void crearCuadricula(){
-        for (int i = 0; i < areaCuadricula; i++) {
-            JPanel panel = new JPanel();
-            panel.setBackground(Color.WHITE);
-            this.add(panel);
 
+    private void limpiarCuadricula() {
+        for (int i = 0; i < dimensionCuadricula.height; i++) {
+            for (int j = 0; j < dimensionCuadricula.width; j++) {
+                panelesCuadricula[i][j] = new PanelCuadro(null);
+                this.add(panelesCuadricula[i][j]);
+            }
+        }
+    }
+
+    public void generarCuadricula(List<Token> tokens) {
+        removeAll();
+        this.setBackground(Color.WHITE);
+        int contador = 0;
+        for (int i = 0; i < dimensionCuadricula.height; i++) {
+            for (int j = 0; j < dimensionCuadricula.width; j++) {
+                if (contador >= tokens.size()) {
+                    panelesCuadricula[i][j] = new PanelCuadro(null);
+                    this.add(panelesCuadricula[i][j]);
+                } else {
+                    panelesCuadricula[i][j] = new PanelCuadro(tokens.get(contador));
+                    this.add(panelesCuadricula[i][j]);
+                    contador++;
+                }
+            }
         }
         repaint();
     }
@@ -41,13 +60,8 @@ public class PanelImagen extends JPanel {
         return dimensionCuadricula;
     }
 
-    public int getAreaCuadricula() {
-        return areaCuadricula;
-    }
-
     public JPanel[][] getPanelesCuadricula() {
         return panelesCuadricula;
     }
-    
-    
+
 }

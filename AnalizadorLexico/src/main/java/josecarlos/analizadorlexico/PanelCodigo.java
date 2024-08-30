@@ -1,5 +1,6 @@
 package josecarlos.analizadorlexico;
 
+import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.text.BadLocationException;
@@ -11,10 +12,14 @@ import javax.swing.text.BadLocationException;
 public class PanelCodigo extends javax.swing.JPanel {
 
     private Analizador analizador;
+    private PanelImagen panelImagen;
+    
     /**
      * Creates new form PanelCodigo
+     * @param panelImagen
      */
-    public PanelCodigo() {
+    public PanelCodigo(PanelImagen panelImagen) {
+        this.panelImagen = panelImagen;
         initComponents();
     }
 
@@ -111,6 +116,8 @@ public class PanelCodigo extends javax.swing.JPanel {
 
     private void analizarTexto(String texto){
         analizador = new Analizador(texto);
+        List<Token> tokens = analizador.generarTokens();
+        panelImagen.generarCuadricula(tokens);
     }
     
     private void actualizarEstado(int linea, int columna) {

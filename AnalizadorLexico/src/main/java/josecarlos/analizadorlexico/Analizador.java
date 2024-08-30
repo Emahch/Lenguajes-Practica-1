@@ -41,34 +41,34 @@ public class Analizador {
         currentIndex = marcadorIndice;
     }
 
-    public List<Token> tokenize() {
+    public List<Token> generarTokens() {
         List<Token> tokens = new ArrayList<>();
 
         while (currentIndex < textoIngresado.length()) {
-            char charActual = charActual();
+            char current = charActual();
 
-            if (Character.isWhitespace(charActual)) {
+            if (Character.isWhitespace(current)) {
                 avanzar();  // Ignorar espacios en blanco
-            } else if (Character.isLetter(charActual)) {
+            } else if (Character.isLetter(current)) {
                 tokens.add(identificarPalabra()); // Identifica si es palabra reservada, identificador o algun operador
-            } else if (Character.isDigit(charActual)) {
+            } else if (Character.isDigit(current)) {
                 tokens.add(identificarNumero()); // Identifica si es numero o decimal
-            } else if (isOperator(charActual)) {
-                tokens.add(lexOperator());
-            } else if (charActual == '\n') {
+            } else if (esOperadorAritmeticoOAsignacionCompuesta(current)) {
+                tokens.add(identificarOperadorOAsignacionCompuesta());
+            } else if (esOperadorRelacionalOAsignacionSimple(current)) {
+                tokens.add(identificarOperadorOAsignacionSimple());
+            } else if (esSimbolo(current)) {
+                tokens.add(identificarSimbolo());
+            } else if (current == '\n') {
                 avanzar();
                 currentLine++;
                 currentColumn = 0;
-            } else if (charActual == '\'') {
-                if (lookAhead() == '\'') {
-                    tokens.add(lexComment());
-                } else {
-                    tokens.add(lexCharacter());
-                }
-            } else if (charActual == '"') {
-                tokens.add(lexString());
+            } else if (current == '\'') {
+                tokens.add(identificarCaracterOComentario());
+            } else if (current == '"') {
+                tokens.add(identificarCadena());
             } else {
-                tokens.add(new Token(TokenType.UNKNOWN, String.valueOf(charActual)));
+                tokens.add(null);
                 avanzar();
             }
         }
@@ -218,11 +218,10 @@ public class Analizador {
 
         if (current != ',') {
             return null;
-        } 
+        }
         string.append(current);
         avanzar();
         current = charActual();
-        
 
         while (Character.isWhitespace(current)) {
             avanzar();
@@ -256,92 +255,178 @@ public class Analizador {
     private Token identificarNumero() {
         StringBuilder string = new StringBuilder();
         char current = charActual();
-        boolean isDecimal = false;
+        boolean esDecimal = false;
 
-        while (Character.isDigit(current) || (current == '.' && !isDecimal)) {
+        while (Character.isDigit(current) || (current == '.' && !esDecimal)) {
             if (current == '.') {
-                isDecimal = true;
+                esDecimal = true;
             }
             string.append(current);
             avanzar();
             current = charActual();
         }
 
-        if (isDecimal) {
+        if (esDecimal) {
             return new Token(TokenType.NUMERO_DECIMAL, string.toString());
         } else {
             return new Token(TokenType.NUMERO_ENTERO, string.toString());
         }
     }
 
-    private Token lexCharacter() {
-        avanzar();  // Saltar la primera comilla '
+    private Token identificarSimbolo() {
         char current = charActual();
-        StringBuilder sb = new StringBuilder();
-
-        if (current == '\\') {  // Manejar caracteres de escape
-            sb.append(current);
-            avanzar();
-            current = charActual();
-            sb.append(current);
-        } else {
-            sb.append(current);
-        }
-
-        avanzar();  // Saltar el carácter o secuencia de escape
-        avanzar();  // Saltar la segunda comilla '
-        return new Token(TokenType.CARACTER, sb.toString());
-    }
-
-    private Token lexString() {
-        StringBuilder sb = new StringBuilder();
-        avanzar();  // Saltar la primera comilla "
-
-        char current = charActual();
-        while (current != '"' && current != '\0') {
-            if (current == '\\') {  // Manejar secuencias de escape dentro de la cadena
-                sb.append(current);
-                avanzar();
-                current = charActual();
-                sb.append(current);
-            } else {
-                sb.append(current);
-            }
-            avanzar();
-            current = charActual();
-        }
-
-        avanzar();  // Saltar la última comilla "
-        return new Token(TokenType.CADENA, sb.toString());
-    }
-
-    private Token lexOperator() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(charActual());
         avanzar();
 
-        char next = charActual();
-        // Comprobamos operadores de dos caracteres (ej. ==, !=, >=, <=)
-        if ((sb.charAt(0) == '=' || sb.charAt(0) == '!' || sb.charAt(0) == '>' || sb.charAt(0) == '<') && next == '=') {
-            sb.append(next);
-            avanzar();
+        switch (current) {
+            case '(', ')' -> {
+                return new Token(TokenType.SIMBOLO_PARENTESIS, String.valueOf(current));
+            }
+            case '{', '}' -> {
+                return new Token(TokenType.SIMBOLO_LLAVE, String.valueOf(current));
+            }
+            case '[', ']' -> {
+                return new Token(TokenType.SIMBOLO_CORCHETE, String.valueOf(current));
+            }
+            case ',' -> {
+                return new Token(TokenType.SIGNO_COMA, String.valueOf(current));
+            }
+            case '.' -> {
+                return new Token(TokenType.SIGNO_PUNTO, String.valueOf(current));
+            }
+            default -> {
+                return null;
+            }
         }
-
-        return new Token(TokenType.OPERADOR_ASIGNACION_SIMPLE, sb.toString());
     }
 
-    private Token lexComment() {
-        StringBuilder sb = new StringBuilder();
-        avanzar();  // Saltar la primera comilla '
+    private Token identificarOperadorOAsignacionCompuesta() {
+        StringBuilder string = new StringBuilder();
+        string.append(charActual());
+        avanzar();
 
+        if (string.toString().equals("^")) {
+            return new Token(TokenType.OPERADOR_ARITMETICO_EXPONENTE, string.toString());
+        }
+
+        char siguiente = charActual();
+        if (siguiente == '=') {
+            string.append(siguiente);
+            avanzar();
+            return new Token(TokenType.OPERADOR_ASIGNACION_COMPUESTA, string.toString());
+        } else {
+            switch (string.charAt(0)) {
+                case '+' -> {
+                    return new Token(TokenType.OPERADOR_ARITMETICO_SUMA, string.toString());
+                }
+                case '-' -> {
+                    return new Token(TokenType.OPERADOR_ARITMETICO_RESTA, string.toString());
+                }
+                case '/' -> {
+                    return new Token(TokenType.OPERADOR_ARITMETICO_DIVISION, string.toString());
+                }
+                case '*' -> {
+                    return new Token(TokenType.OPERADOR_ARITMETICO_MULTIPLICACION, string.toString());
+                }
+                default -> {
+                    return null;
+                }
+            }
+        }
+    }
+
+    private Token identificarOperadorOAsignacionSimple() {
+        StringBuilder string = new StringBuilder();
+        string.append(charActual());
+        avanzar();
+
+        char siguiente = charActual();
+
+        if (string.charAt(0) == '=') {
+            if (siguiente == '=') {
+                string.append(siguiente);
+                avanzar();
+                return new Token(TokenType.OPERADOR_RELACIONAL_IGUAL, string.toString());
+            } else {
+                return new Token(TokenType.OPERADOR_ASIGNACION_SIMPLE, string.toString());
+            }
+        } else if (string.charAt(0) == '<') {
+            if (siguiente == '>') {
+                string.append(siguiente);
+                avanzar();
+                return new Token(TokenType.OPERADOR_RELACIONAL_DIFERENTE, string.toString());
+            } else if (siguiente == '=') {
+                string.append(siguiente);
+                avanzar();
+                return new Token(TokenType.OPERADOR_RELACIONAL_MENOR_IGUAL_QUE, string.toString());
+            } else {
+                return new Token(TokenType.OPERADOR_RELACIONAL_MENOR_QUE, string.toString());
+            }
+        } else if (string.charAt(0) == '>') {
+            if (siguiente == '=') {
+                string.append(siguiente);
+                avanzar();
+                return new Token(TokenType.OPERADOR_RELACIONAL_MAYOR_IGUAL_QUE, string.toString());
+            } else {
+                return new Token(TokenType.OPERADOR_RELACIONAL_MAYOR_QUE, string.toString());
+            }
+        }
+        return null;
+    }
+
+    private Token identificarCaracterOComentario() {
+        StringBuilder string = new StringBuilder();
         char current = charActual();
-        while (current != '\n' && current != '\0') {  // Leer hasta el final de la línea o el final del archivo
-            sb.append(current);
+        string.append(current);
+        avanzar();
+        current = charActual();
+
+        String caracterInicio = string.toString();
+        int marcadorIndice = currentIndex;
+
+        if (current != '\n' && !Character.isWhitespace(current) && current != '\'' && current != '\0') {
+            string.append(current);
+            avanzar();
+            current = charActual();
+            if (current == '\'') {
+                string.append(current);
+                avanzar();
+                return new Token(TokenType.CARACTER, string.toString());
+            } else {
+                retroceder(marcadorIndice);
+                string = new StringBuilder(caracterInicio);
+            }
+        }
+
+        while (current != '\n' && current != '\0') {
+            string.append(current);
             avanzar();
             current = charActual();
         }
 
-        return new Token(TokenType.COMENTARIO, sb.toString());
+        return new Token(TokenType.COMENTARIO, string.toString());
+    }
+
+    private Token identificarCadena() {
+        StringBuilder string = new StringBuilder();
+        char current = charActual();
+        string.append(current);
+        avanzar();
+
+        current = charActual();
+
+        while (current != '"' && current != '\0') {
+            string.append(current);
+            avanzar();
+            current = charActual();
+        }
+
+        if (current == '"') {
+            string.append(current);
+            avanzar();
+        } else {
+            string.append('"');
+        }
+        return new Token(TokenType.CADENA, string.toString());
     }
 
     private boolean esPalabraReservada(String palabra) {
@@ -363,27 +448,16 @@ public class Analizador {
         return false;
     }
 
-    private boolean isOperator(char c) {
-        return "+-^*/=<>".indexOf(c) >= 0;
+    private boolean esOperadorAritmeticoOAsignacionCompuesta(char c) {
+        return c == '+' || c == '-' || c == '^' || c == '/' || c == '*';
     }
 
-    private boolean isSeparator(char c) {
-        return "(){};,.".indexOf(c) >= 0;
+    private boolean esOperadorRelacionalOAsignacionSimple(char c) {
+        return c == '=' || c == '<' || c == '>';
     }
 
-    private char lookAhead() {
-        return currentIndex + 1 < textoIngresado.length() ? textoIngresado.charAt(currentIndex + 1) : '\0';
-    }
-
-    public static void main(String[] args) {
-        String code = """
-                      int x = 42; float y = 3.14; char c = 'a'; string s = "hello"; 'This is a comment' sd
-                      Square.Color(#4905gh   , 1,2) ,  Square.Color(#4905gh   , 12) sladkf True Console.WriteLine Integer""";
-        Analizador lexer = new Analizador(code);
-        List<Token> tokens = lexer.tokenize();
-        for (Token token : tokens) {
-            System.out.println(token);
-        }
+    private boolean esSimbolo(char c) {
+        return c == '(' || c == ')' || c == '{' || c == '}' || c == '[' || c == ']' || c == ',' || c == '.';
     }
 
 }

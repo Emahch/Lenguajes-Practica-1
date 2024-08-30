@@ -21,8 +21,8 @@ public class PanelContenido extends JPanel{
     
     private void iniciarComponentes(){
         setLayout(new GridLayout(1, 2, 10, 10));
-        panelCodigo = new PanelCodigo();
         panelImagen = new PanelImagen(dimensionImagen);
+        panelCodigo = new PanelCodigo(panelImagen);
         add(panelCodigo);
         add(panelImagen);
     }

@@ -1,5 +1,7 @@
 package josecarlos.analizadorlexico;
 
+import java.awt.Color;
+
 /**
  *
  * @author emahch
@@ -16,6 +18,10 @@ public class Token {
         this.value = value;
     }
 
+    public Color getColor(){
+        return this.type.getColor();
+    }
+    
     @Override
     public String toString() {
         return String.format("Token{type=%s, value='%s'}", type, value);

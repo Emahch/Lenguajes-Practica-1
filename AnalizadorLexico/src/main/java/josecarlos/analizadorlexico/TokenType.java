@@ -46,15 +46,16 @@ public enum TokenType {
     SIMBOLO_LLAVE(Color.decode("#DBD29A")),
     SIMBOLO_CORCHETE(Color.decode("#DBA49A")),
     SIGNO_COMA(Color.decode("#B79ADB")),
-    SIGNO_PUNTO(Color.decode("#9ADBA6")),
-    
-    SEPARATOR(null),
-    WHITESPACE(null),
-    UNKNOWN(null);
-    
+    SIGNO_PUNTO(Color.decode("#9ADBA6"));
+        
     private final Color color;
     
     private TokenType(Color color){
         this.color = color;
     }
+
+    public Color getColor() {
+        return color;
+    }
+    
 }
