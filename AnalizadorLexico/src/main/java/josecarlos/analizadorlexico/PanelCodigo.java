@@ -16,7 +16,6 @@ public class PanelCodigo extends javax.swing.JPanel {
      */
     public PanelCodigo() {
         initComponents();
-        analizador = new Analizador();
     }
 
     /**
@@ -111,7 +110,7 @@ public class PanelCodigo extends javax.swing.JPanel {
     }//GEN-LAST:event_txtCodigoCaretUpdate
 
     private void analizarTexto(String texto){
-        analizador.analizarTexto(texto);
+        analizador = new Analizador(texto);
     }
     
     private void actualizarEstado(int linea, int columna) {

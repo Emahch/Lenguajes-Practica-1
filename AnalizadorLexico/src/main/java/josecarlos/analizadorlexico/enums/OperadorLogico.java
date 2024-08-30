@@ -9,9 +9,7 @@ import java.awt.Color;
 public enum OperadorLogico {
     AND(Color.decode("#414ED9")),
     OR(Color.decode("#41D95D")),
-    NOT(Color.decode("#A741D9")),
-    True(Color.decode("#FA6800")),
-    False(Color.decode("#FA6800"));
+    NOT(Color.decode("#A741D9"));
     
     private final Color color;
     
