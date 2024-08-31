@@ -1,4 +1,4 @@
-package josecarlos.analizadorlexico;
+package josecarlos.analizadorlexico.utilidades;
 
 /**
  *

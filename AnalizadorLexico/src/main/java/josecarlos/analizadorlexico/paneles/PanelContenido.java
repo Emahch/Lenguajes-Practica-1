@@ -1,4 +1,4 @@
-package josecarlos.analizadorlexico;
+package josecarlos.analizadorlexico.paneles;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;

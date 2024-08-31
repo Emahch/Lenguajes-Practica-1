@@ -1,4 +1,4 @@
-package josecarlos.analizadorlexico;
+package josecarlos.analizadorlexico.tokens;
 
 import java.awt.Color;
 
@@ -41,6 +41,7 @@ public enum TokenType {
     SQUARE(null),
     
     COMENTARIO(Color.decode("#B3B3B3")),
+    DESCONOCIDO(Color.decode("#0f0")),
     
     SIMBOLO_PARENTESIS(Color.decode("#9AD8DB")),
     SIMBOLO_LLAVE(Color.decode("#DBD29A")),

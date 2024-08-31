@@ -17,40 +17,30 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="labelLimiteExcedido" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Component id="labelTituloPosicionTexto" alignment="1" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="scrollPanel" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="labelTituloPosicionTexto" max="32767" attributes="0"/>
-                          <Component id="labelPosicionTexto" pref="343" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="labelPosicionImagen" pref="341" max="32767" attributes="0"/>
-                          <Component id="labelTituloPosicionCuadricula" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-              </Group>
+              <Component id="scrollPanel" pref="690" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
           </Group>
+          <Component id="labelPosicionTexto" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-              <Component id="scrollPanel" pref="411" max="32767" attributes="0"/>
-              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="labelTituloPosicionTexto" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelTituloPosicionCuadricula" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="scrollPanel" pref="416" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="labelPosicionTexto" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="labelPosicionImagen" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="labelLimiteExcedido" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+              <Component id="labelTituloPosicionTexto" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="labelPosicionTexto" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -83,14 +73,13 @@
             </Property>
             <Property name="columns" type="int" value="20"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Nimbus Mono PS" size="12" style="0"/>
+              <Font name="Nimbus Mono PS" size="14" style="0"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="PRUEBA"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                 <EmptyBorder bottom="2" left="2" right="2" top="2"/>
@@ -99,26 +88,26 @@
           </Properties>
           <Events>
             <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="txtCodigoCaretUpdate"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtCodigoKeyReleased"/>
           </Events>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="labelPosicionImagen">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Linea: X, Columna: X"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="labelTituloPosicionTexto">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Texto"/>
+        <Property name="text" type="java.lang.String" value="Posicion"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="labelTituloPosicionCuadricula">
+    <Component class="javax.swing.JLabel" name="labelLimiteExcedido">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Liberation Sans" size="15" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="99" type="rgb"/>
+        </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Cuadricula"/>
       </Properties>
     </Component>
   </SubComponents>

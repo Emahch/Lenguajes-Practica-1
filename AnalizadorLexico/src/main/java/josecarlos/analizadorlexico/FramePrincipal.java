@@ -1,5 +1,9 @@
 package josecarlos.analizadorlexico;
 
+import josecarlos.analizadorlexico.paneles.PanelContenido;
+import josecarlos.analizadorlexico.utilidades.ExportImportFiles;
+import josecarlos.analizadorlexico.utilidades.DialogSolicitarCuadricula;
+import josecarlos.analizadorlexico.utilidades.SolicitudCanceladaException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.JFrame;
@@ -27,6 +31,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         panelContenido = new PanelContenido(dimensionImagen);
         getContentPane().add(panelContenido, BorderLayout.CENTER);
         pack();
+    }
+    
+    public static void main(String[] args) {
+        FramePrincipal frame = new FramePrincipal();
+        frame.setVisible(true);
     }
 
     /**
@@ -66,6 +75,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         botonExportarPng.setForeground(new java.awt.Color(255, 255, 255));
         botonExportarPng.setText("Exportar Imágen");
         botonExportarPng.setFocusPainted(false);
+        botonExportarPng.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonExportarPngActionPerformed(evt);
+            }
+        });
         panelAcciones.add(botonExportarPng);
 
         getContentPane().add(panelAcciones, java.awt.BorderLayout.NORTH);
@@ -98,9 +112,20 @@ public class FramePrincipal extends javax.swing.JFrame {
             ExportImportFiles importArchivo = new ExportImportFiles(false);
             String texto = importArchivo.recibirArchivoEntrada();
             txtCodigo.setText(texto);
+            panelContenido.getPanelCodigo().analizarTexto();
         } catch (SolicitudCanceladaException ex) {
         }
     }//GEN-LAST:event_botonIngresarArchivoActionPerformed
+
+    private void botonExportarPngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonExportarPngActionPerformed
+        try {
+            ExportImportFiles exportarImagen = new ExportImportFiles(true);
+            exportarImagen.createImage(panelContenido.getPanelImagen());
+        } catch (SolicitudCanceladaException ex) {
+            
+        }
+        
+    }//GEN-LAST:event_botonExportarPngActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonExportarPng;

@@ -1,4 +1,4 @@
-package josecarlos.analizadorlexico;
+package josecarlos.analizadorlexico.utilidades;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,6 +22,7 @@ public class DialogSolicitarCuadricula extends javax.swing.JDialog {
      */
     public DialogSolicitarCuadricula(JFrame componente) {
         setModal(true);
+        setAlwaysOnTop(true);
         initComponents();
         pack();
         setLocationRelativeTo(componente);
@@ -44,7 +45,6 @@ public class DialogSolicitarCuadricula extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Especificar tiempo");
         setMinimumSize(new java.awt.Dimension(300, 180));
-        setPreferredSize(new java.awt.Dimension(300, 180));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {

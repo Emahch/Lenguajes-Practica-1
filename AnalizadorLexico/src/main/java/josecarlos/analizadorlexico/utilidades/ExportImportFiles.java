@@ -1,5 +1,6 @@
-package josecarlos.analizadorlexico;
+package josecarlos.analizadorlexico.utilidades;
 
+import josecarlos.analizadorlexico.utilidades.SolicitudCanceladaException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -50,8 +51,7 @@ public class ExportImportFiles {
     }
 
     public String recibirArchivoEntrada() {
-        try (FileReader fileReader = new FileReader(archivoSeleccionado);
-                BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+        try (FileReader fileReader = new FileReader(archivoSeleccionado); BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String textoRecibido = "";
             String linea = bufferedReader.readLine();
             while (linea != null) {
@@ -65,10 +65,6 @@ public class ExportImportFiles {
         }
     }
 
-    public void exportarImagen() {
-
-    }
-    
     public void createImage(JPanel panel) {
         int w = panel.getWidth();
         int h = panel.getHeight();
@@ -77,10 +73,9 @@ public class ExportImportFiles {
         panel.print(g);
         g.dispose();
         try {
-            File outputfile = new File("saved.png");
+            File outputfile = new File(archivoSeleccionado.getAbsolutePath() + File.separator +"Analizador.png");
             ImageIO.write(bi, "png", outputfile);
         } catch (IOException e) {
-            // handle exception
         }
     }
 }

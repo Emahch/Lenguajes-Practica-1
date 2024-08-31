@@ -1,4 +1,4 @@
-package josecarlos.analizadorlexico.enums;
+package josecarlos.analizadorlexico.tokens;
 
 import java.awt.Color;
 

@@ -1,9 +1,11 @@
-package josecarlos.analizadorlexico;
+package josecarlos.analizadorlexico.paneles;
 
+import josecarlos.analizadorlexico.tokens.Token;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.text.BadLocationException;
+import josecarlos.analizadorlexico.AnalizadorLexico;
 
 /**
  *
@@ -11,7 +13,7 @@ import javax.swing.text.BadLocationException;
  */
 public class PanelCodigo extends javax.swing.JPanel {
 
-    private Analizador analizador;
+    private AnalizadorLexico analizador;
     private PanelImagen panelImagen;
     
     /**
@@ -33,9 +35,8 @@ public class PanelCodigo extends javax.swing.JPanel {
         labelPosicionTexto = new javax.swing.JLabel();
         scrollPanel = new javax.swing.JScrollPane();
         txtCodigo = new javax.swing.JTextArea();
-        labelPosicionImagen = new javax.swing.JLabel();
         labelTituloPosicionTexto = new javax.swing.JLabel();
-        labelTituloPosicionCuadricula = new javax.swing.JLabel();
+        labelLimiteExcedido = new javax.swing.JLabel();
 
         labelPosicionTexto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelPosicionTexto.setText("Linea: X, Columna: X");
@@ -44,59 +45,56 @@ public class PanelCodigo extends javax.swing.JPanel {
 
         txtCodigo.setBackground(new java.awt.Color(255, 255, 255));
         txtCodigo.setColumns(20);
-        txtCodigo.setFont(new java.awt.Font("Nimbus Mono PS", 0, 12)); // NOI18N
+        txtCodigo.setFont(new java.awt.Font("Nimbus Mono PS", 0, 14)); // NOI18N
         txtCodigo.setForeground(new java.awt.Color(0, 0, 0));
         txtCodigo.setLineWrap(true);
         txtCodigo.setRows(5);
-        txtCodigo.setText("PRUEBA");
         txtCodigo.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
         txtCodigo.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 txtCodigoCaretUpdate(evt);
             }
         });
+        txtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCodigoKeyReleased(evt);
+            }
+        });
         scrollPanel.setViewportView(txtCodigo);
 
-        labelPosicionImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelPosicionImagen.setText("Linea: X, Columna: X");
-
         labelTituloPosicionTexto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelTituloPosicionTexto.setText("Texto");
+        labelTituloPosicionTexto.setText("Posicion");
 
-        labelTituloPosicionCuadricula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelTituloPosicionCuadricula.setText("Cuadricula");
+        labelLimiteExcedido.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
+        labelLimiteExcedido.setForeground(new java.awt.Color(153, 0, 0));
+        labelLimiteExcedido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelLimiteExcedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(labelTituloPosicionTexto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollPanel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelTituloPosicionTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(labelPosicionTexto, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelPosicionImagen, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
-                            .addComponent(labelTituloPosicionCuadricula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addComponent(scrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
                 .addGap(20, 20, 20))
+            .addComponent(labelPosicionTexto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(scrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelTituloPosicionTexto)
-                    .addComponent(labelTituloPosicionCuadricula))
+                .addComponent(scrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelPosicionTexto)
-                    .addComponent(labelPosicionImagen)))
+                .addComponent(labelLimiteExcedido)
+                .addGap(1, 1, 1)
+                .addComponent(labelTituloPosicionTexto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelPosicionTexto))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -114,35 +112,33 @@ public class PanelCodigo extends javax.swing.JPanel {
         actualizarEstado(linea, columna);
     }//GEN-LAST:event_txtCodigoCaretUpdate
 
-    private void analizarTexto(String texto){
-        analizador = new Analizador(texto);
+    private void txtCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoKeyReleased
+
+    public void analizarTexto(){
+        analizador = new AnalizadorLexico(txtCodigo.getText());
         List<Token> tokens = analizador.generarTokens();
         panelImagen.generarCuadricula(tokens);
+        if (tokens.size() > panelImagen.getDimensionCuadricula().height*panelImagen.getDimensionCuadricula().width) {
+            labelLimiteExcedido.setText("Limite de tokens superado");
+        } else {
+            labelLimiteExcedido.setText("");
+        }
     }
     
-    private void actualizarEstado(int linea, int columna) {
-        labelPosicionTexto.setText("Linea: " + linea + ", Columna: " + columna);
-        analizarTexto(txtCodigo.getText());
-//        try {
-//            txtCodigo.getDocument().getText(0, 1);
-//            labelPosicionImagen.setText(txtCodigo.getDocument().getText(0, 2));
-//        } catch (BadLocationException ex) {
-//            
-//        }
+    private void actualizarEstado(int fila, int columna) {
+        labelPosicionTexto.setText("Fila: " + fila + ", Columna: " + columna);
+        analizarTexto();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel labelPosicionImagen;
+    private javax.swing.JLabel labelLimiteExcedido;
     private javax.swing.JLabel labelPosicionTexto;
-    private javax.swing.JLabel labelTituloPosicionCuadricula;
     private javax.swing.JLabel labelTituloPosicionTexto;
     private javax.swing.JScrollPane scrollPanel;
     private javax.swing.JTextArea txtCodigo;
     // End of variables declaration//GEN-END:variables
-
-    public JLabel getLabelPosicionImagen() {
-        return labelPosicionImagen;
-    }
 
     public JLabel getLabelPosicionTexto() {
         return labelPosicionTexto;
