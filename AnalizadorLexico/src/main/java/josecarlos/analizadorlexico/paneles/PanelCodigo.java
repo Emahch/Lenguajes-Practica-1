@@ -15,6 +15,7 @@ public class PanelCodigo extends javax.swing.JPanel {
 
     private AnalizadorLexico analizador;
     private PanelImagen panelImagen;
+    private List<Token> tokens;
     
     /**
      * Creates new form PanelCodigo
@@ -116,9 +117,13 @@ public class PanelCodigo extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoKeyReleased
 
+    public List<Token> getTokens(){
+        return tokens;
+    }
+    
     public void analizarTexto(){
         analizador = new AnalizadorLexico(txtCodigo.getText());
-        List<Token> tokens = analizador.generarTokens();
+        tokens = analizador.generarTokens();
         panelImagen.generarCuadricula(tokens);
         if (tokens.size() > panelImagen.getDimensionCuadricula().height*panelImagen.getDimensionCuadricula().width) {
             labelLimiteExcedido.setText("Limite de tokens superado");

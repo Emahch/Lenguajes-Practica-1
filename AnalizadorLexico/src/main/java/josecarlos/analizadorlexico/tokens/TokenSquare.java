@@ -10,28 +10,23 @@ import java.awt.Point;
  */
 public class TokenSquare extends Token {
 
-    private String color;
-    private Point posicionCuadricula;
-
-    public TokenSquare(String value, String Color, int fila, int columna, int filaCuadricula, int columnaCuadricula) {
-        super(TokenType.SQUARE, value, fila, columna);
-        this.color = Color;
-        this.posicionCuadricula = new Point(columnaCuadricula, filaCuadricula);
+    public TokenSquare(String value, String color, int fila, int columna, int filaCuadricula, int columnaCuadricula) {
+        super(TokenType.SQUARE, color, value, fila, columna);
+        this.posicionCuadro = new Point(columnaCuadricula, filaCuadricula);
+    }
+    
+    public TokenSquare(String value, String color, int fila, int columna) {
+        super(TokenType.SQUARE , color, value, fila, columna);
     }
 
-    public TokenSquare(String value, String Color, int fila, int columna) {
-        super(TokenType.SQUARE, value, fila, columna);
-        this.color = Color;
-    }
-
-    public Point getPosicionCuadricula() {
-        return posicionCuadricula;
+    public Point getPosicionCuadro() {
+        return posicionCuadro;
     }
 
     @Override
     public Color getColor() {
         try {
-            return Color.decode(color);
+            return Color.decode(codigoColor);
         } catch (NumberFormatException e) {
             return null;
         }

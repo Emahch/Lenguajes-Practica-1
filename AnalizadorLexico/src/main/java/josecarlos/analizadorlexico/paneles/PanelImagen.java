@@ -50,7 +50,7 @@ public class PanelImagen extends JPanel {
                 Token token = tokens.get(contador);
                 contador++;
                 if (token instanceof TokenSquare tokenSquare) {
-                    Point posicionCuadricula = tokenSquare.getPosicionCuadricula();
+                    Point posicionCuadricula = tokenSquare.getPosicionCuadro();
                     if (posicionCuadricula != null) {
                         if (isPosicionValida(posicionCuadricula)) {
                             int fila = posicionCuadricula.y - 1;

@@ -6,8 +6,11 @@ import josecarlos.analizadorlexico.utilidades.DialogSolicitarCuadricula;
 import josecarlos.analizadorlexico.utilidades.SolicitudCanceladaException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
+import josecarlos.analizadorlexico.tokens.Token;
 
 /**
  *
@@ -45,20 +48,14 @@ public class FramePrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         panelAcciones = new javax.swing.JPanel();
         botonIngresarArchivo = new javax.swing.JButton();
         botonExportarPng = new javax.swing.JButton();
+        botonReportes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Analizador Léxico");
         setMinimumSize(new java.awt.Dimension(800, 500));
-
-        jLabel2.setBackground(new java.awt.Color(0, 102, 153));
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Cambios Guardados");
-        jLabel2.setOpaque(true);
-        getContentPane().add(jLabel2, java.awt.BorderLayout.PAGE_END);
 
         botonIngresarArchivo.setBackground(new java.awt.Color(0, 102, 153));
         botonIngresarArchivo.setForeground(new java.awt.Color(255, 255, 255));
@@ -83,6 +80,16 @@ public class FramePrincipal extends javax.swing.JFrame {
         panelAcciones.add(botonExportarPng);
 
         getContentPane().add(panelAcciones, java.awt.BorderLayout.NORTH);
+
+        botonReportes.setBackground(new java.awt.Color(0, 102, 153));
+        botonReportes.setText("Reportes");
+        botonReportes.setFocusPainted(false);
+        botonReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonReportesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonReportes, java.awt.BorderLayout.PAGE_END);
 
         pack();
         setLocationRelativeTo(null);
@@ -127,10 +134,27 @@ public class FramePrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_botonExportarPngActionPerformed
 
+    private void botonReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReportesActionPerformed
+        List<Token> tokens = panelContenido.getPanelCodigo().getTokens();
+        if (tokens == null) {
+            return;
+        }
+        
+        List<String[]> reporte = new ArrayList<>();
+        
+        for (Token token : tokens) {
+            reporte.add(token.getReporte());
+        }
+        
+        FrameReportes frameReportes = new FrameReportes(reporte);
+        frameReportes.setVisible(true);
+        frameReportes.setLocationRelativeTo(null);
+    }//GEN-LAST:event_botonReportesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonExportarPng;
     private javax.swing.JButton botonIngresarArchivo;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton botonReportes;
     private javax.swing.JPanel panelAcciones;
     // End of variables declaration//GEN-END:variables
 }

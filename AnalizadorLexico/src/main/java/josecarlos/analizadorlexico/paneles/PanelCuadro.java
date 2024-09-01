@@ -9,6 +9,7 @@ import guru.nidi.graphviz.model.MutableGraph;
 import josecarlos.analizadorlexico.tokens.Token;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Point;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,6 +29,9 @@ public class PanelCuadro extends JPanel{
         this.filaCuadro = filaCuadro + 1;
         this.columnaCuadro = columnaCuadro + 1;
         this.token = token;
+        if (this.token != null) {
+            this.token.setPosicionCuadro(new Point(columnaCuadro, filaCuadro));
+        }
         pintar();
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

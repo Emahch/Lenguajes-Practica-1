@@ -1,6 +1,5 @@
 package josecarlos.analizadorlexico.tokens;
 
-import josecarlos.analizadorlexico.tokens.TokenType;
 import java.awt.Color;
 import java.awt.Point;
 
@@ -8,19 +7,33 @@ import java.awt.Point;
  *
  * @author emahch
  */
-
 public class Token {
+
     private TokenType type;
+    protected String codigoColor;
     private String value;
     private Point posicionTexto;
+    protected Point posicionCuadro;
 
     public Token(TokenType type, String value, int fila, int columna) {
         this.type = type;
+        this.codigoColor = type.getCodigoColor();
         this.value = value;
-        this.posicionTexto = new Point(columna-value.length(), fila);
+        this.posicionTexto = new Point(columna - value.length(), fila);
+    }
+    
+    public Token(TokenType type, String codigoColor, String value, int fila, int columna) {
+        this.type = type;
+        this.codigoColor = codigoColor;
+        this.value = value;
+        this.posicionTexto = new Point(columna - value.length(), fila);
     }
 
-    public Color getColor(){
+    public void setPosicionCuadro(Point posicionCuadro) {
+        this.posicionCuadro = posicionCuadro;
+    }
+
+    public Color getColor() {
         return this.type.getColor();
     }
 
@@ -35,9 +48,24 @@ public class Token {
     public String getValue() {
         return value;
     }
-    
+
     @Override
     public String toString() {
         return String.format("Token{type=%s, value='%s'}", type, value);
+    }
+
+    public String[] getReporte() {
+        if (posicionCuadro == null) {
+            return null;
+        }
+        String[] reporte = new String[5];
+        reporte[0] = type.name();
+        reporte[1] = value;
+        reporte[2] = String.valueOf(posicionTexto.y);
+        reporte[3] = String.valueOf(posicionTexto.x);
+        reporte[4] = "Fila: " + String.valueOf(posicionCuadro.y+1) + " " + 
+                "Col: " + String.valueOf(posicionCuadro.x+1) + " " + 
+                "Color: " + codigoColor;
+        return reporte;
     }
 }
