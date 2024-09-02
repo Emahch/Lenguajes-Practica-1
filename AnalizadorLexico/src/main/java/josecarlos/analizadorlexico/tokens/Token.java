@@ -15,6 +15,13 @@ public class Token {
     private Point posicionTexto;
     protected Point posicionCuadro;
 
+    /**
+     * Recibe los datos del token
+     * @param type
+     * @param value
+     * @param fila
+     * @param columna 
+     */
     public Token(TokenType type, String value, int fila, int columna) {
         this.type = type;
         this.codigoColor = type.getCodigoColor();
@@ -22,6 +29,13 @@ public class Token {
         this.posicionTexto = new Point(columna - value.length(), fila);
     }
     
+    /**
+     * Recibe los datos del token especificando un codigo de color distinto al del token
+     * @param type
+     * @param value
+     * @param fila
+     * @param columna 
+     */
     public Token(TokenType type, String codigoColor, String value, int fila, int columna) {
         this.type = type;
         this.codigoColor = codigoColor;
@@ -54,6 +68,10 @@ public class Token {
         return String.format("Token{type=%s, value='%s'}", type, value);
     }
 
+    /**
+     * Devuelve un array con los datos del token en formato reporte
+     * @return 
+     */
     public String[] getReporte() {
         if (posicionCuadro == null) {
             return null;

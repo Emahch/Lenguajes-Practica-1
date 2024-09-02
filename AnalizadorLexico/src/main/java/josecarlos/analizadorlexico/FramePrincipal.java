@@ -82,6 +82,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         getContentPane().add(panelAcciones, java.awt.BorderLayout.NORTH);
 
         botonReportes.setBackground(new java.awt.Color(0, 102, 153));
+        botonReportes.setForeground(new java.awt.Color(255, 255, 255));
         botonReportes.setText("Reportes");
         botonReportes.setFocusPainted(false);
         botonReportes.addActionListener(new java.awt.event.ActionListener() {

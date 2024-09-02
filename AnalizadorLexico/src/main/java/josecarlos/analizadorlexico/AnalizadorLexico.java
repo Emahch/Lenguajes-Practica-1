@@ -43,6 +43,10 @@ public class AnalizadorLexico {
         currentIndex = marcadorIndice;
     }
 
+    /**
+     * Metodo encargado de analizar todo el texto y regresar los tokens hallados
+     * @return lista de token
+     */
     public List<Token> generarTokens() {
         List<Token> tokens = new ArrayList<>();
 
@@ -78,6 +82,10 @@ public class AnalizadorLexico {
         return tokens;
     }
 
+    /**
+     * Metodo encargado de identificar todo tipo de cadenas que inicien con una letra
+     * @return token encontrado
+     */
     private Token identificarPalabra() {
         StringBuilder string = new StringBuilder();
         char current = charActual();
@@ -120,6 +128,11 @@ public class AnalizadorLexico {
         return new Token(TokenType.IDENTIFICADOR, palabra, currentLine, currentColumn);
     }
 
+    /**
+     * Determina si el token es una palabra reservada que contiene un punto (Console.Writeline o Console.ReadLine)
+     * @param string
+     * @return token palabra reservada especial
+     */
     private Token identificarPalabraReservadaEspecial(StringBuilder string) {
         char current = charActual();
         do {
@@ -136,6 +149,11 @@ public class AnalizadorLexico {
         }
     }
 
+    /**
+     * Identifica si es un token de la funcion Square.Color
+     * @param string
+     * @return tokenSquare o null
+     */
     private Token identificarFuncionSquare(StringBuilder string) {
         char current = charActual();
 
@@ -158,6 +176,11 @@ public class AnalizadorLexico {
         return null;
     }
 
+    /**
+     * Identifica los parametros de la funcion Square.Color
+     * @param string
+     * @return tokenSquare o null
+     */
     private Token identificarParametrosSquare(StringBuilder string) {
         char current = charActual();
         StringBuilder color = new StringBuilder();
@@ -192,6 +215,12 @@ public class AnalizadorLexico {
         return null;
     }
 
+    /**
+     * Identifica si la función Square.Color contiene parametros de fila y columna
+     * @param string
+     * @param color
+     * @return tokenSquare o null
+     */
     private Token identificarFilaColumnaSquare(StringBuilder string, String color) {
         char current = charActual();
         StringBuilder fila = new StringBuilder();
@@ -254,6 +283,10 @@ public class AnalizadorLexico {
         return null;
     }
 
+    /**
+     * Identifica si es un numero entero o numero decimal
+     * @return Token numero entero o numero decimal
+     */
     private Token identificarNumero() {
         StringBuilder string = new StringBuilder();
         char current = charActual();
@@ -290,6 +323,10 @@ public class AnalizadorLexico {
         return new Token(TokenType.NUMERO_ENTERO, string.toString(), currentLine, currentColumn);
     }
 
+    /**
+     * Identifica el tipo de simbolo ingresado
+     * @return token simbolo
+     */
     private Token identificarSimbolo() {
         char current = charActual();
         avanzar();
@@ -316,6 +353,10 @@ public class AnalizadorLexico {
         }
     }
 
+    /**
+     * Identifica si esun operador aritmetico o una asignacion compuesta
+     * @return token aritmetico o token asignacion compuesta
+     */
     private Token identificarOperadorOAsignacionCompuesta() {
         StringBuilder string = new StringBuilder();
         string.append(charActual());
@@ -351,6 +392,10 @@ public class AnalizadorLexico {
         }
     }
 
+    /**
+     * Identifica si es un operador relacional o un operador de asignacion compuesto
+     * @return token operador relacional o asignacion simple
+     */
     private Token identificarOperadorOAsignacionSimple() {
         StringBuilder string = new StringBuilder();
         string.append(charActual());
@@ -390,6 +435,10 @@ public class AnalizadorLexico {
         return null;
     }
 
+    /**
+     * Identifica si es un caracter o un comentario
+     * @return token caracter o token comentario
+     */
     private Token identificarCaracterOComentario() {
         StringBuilder string = new StringBuilder();
         char current = charActual();
@@ -424,6 +473,10 @@ public class AnalizadorLexico {
         return new Token(TokenType.COMENTARIO, string.toString(), currentLine, currentColumn);
     }
 
+    /**
+     * Identifica si es una cadena de texto encerrada por commillas
+     * @return tokenCadena
+     */
     private Token identificarCadena() {
         StringBuilder string = new StringBuilder();
         char current = charActual();

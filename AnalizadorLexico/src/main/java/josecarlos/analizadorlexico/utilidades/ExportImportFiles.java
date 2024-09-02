@@ -1,13 +1,11 @@
 package josecarlos.analizadorlexico.utilidades;
 
-import josecarlos.analizadorlexico.utilidades.SolicitudCanceladaException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import static java.lang.Thread.sleep;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -29,6 +27,11 @@ public class ExportImportFiles {
         }
     }
 
+    /**
+     * Muestra un file chooser que permite al usuario seleccionar el archivo o carpeta
+     * @param mode
+     * @throws SolicitudCanceladaException si se cancela la solicitud
+     */
     private void mostrarDialog(int mode) throws SolicitudCanceladaException {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(false);
@@ -50,6 +53,10 @@ public class ExportImportFiles {
         }
     }
 
+    /**
+     * Lee el archivo de entrada y lo convierte a una cadena de texto
+     * @return string texto del archivo de entrada
+     */
     public String recibirArchivoEntrada() {
         try (FileReader fileReader = new FileReader(archivoSeleccionado); BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String textoRecibido = "";
@@ -65,6 +72,10 @@ public class ExportImportFiles {
         }
     }
 
+    /**
+     * se encarga de crear la imagen en base a un panel ingresado
+     * @param panel 
+     */
     public void createImage(JPanel panel) {
         int w = panel.getWidth();
         int h = panel.getHeight();
